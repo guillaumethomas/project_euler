@@ -1,5 +1,6 @@
 from math import sqrt
 from functools import reduce
+from collections import defaultdict
 
 
 def prime_factor(numb):
@@ -11,13 +12,13 @@ def prime_factor(numb):
         lst.append(2)
 
     boolean = True
-    k = int(sqrt(n))
+    k = int(sqrt(n)) + 1
     f = 3
     while boolean:
         if n % f == 0:
             lst.append(f)
             n = n / f
-            k = int(sqrt(n))
+            k = int(sqrt(n)) + 1
             f = 3
 
         f += 2
@@ -32,6 +33,28 @@ def prime_factor(numb):
         lst.append(int(n))
 
     return(lst)
+
+# A function to print all prime factors of a given number n
+def prime_factor_2(n):
+    res = []
+    # Print the number of two's that divide n
+    while n % 2 == 0:
+        res.append(2)
+        n = n / 2
+    # n must be odd at this point
+    # so a skip of 2 ( i = i + 2) can be used
+    for i in range(3, int(sqrt(n)) + 1, 2):
+        # while i divides n , print i ad divide n
+        while n % i == 0:
+            res.append(i)
+            n = n / i
+    # Condition if n is a prime
+    # number greater than 2
+    if n > 2:
+        res.append(n)
+
+    return res
+
 
 
 def display_prime(numb):
@@ -59,6 +82,14 @@ def list_prime(n):
             break
         i += 2
     return res
+
+
+def dict_prime(n):
+    lst = prime_factor_2(n)
+    res = defaultdict(int)
+    for i in lst:
+        res[i] += 1
+    return dict(res)
 
 
 def list_prime_inf(n):
